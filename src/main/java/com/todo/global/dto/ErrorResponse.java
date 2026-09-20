@@ -13,16 +13,9 @@ public class ErrorResponse {
     private String name;
     private String message;
 
-    public static ResponseEntity<ErrorResponse> toResponseEntity(ErrorCode errorCode){
+    public static ResponseEntity<ApiResponse<?>> toResponseEntity(ErrorCode errorCode){
         return ResponseEntity
                 .status(errorCode.getStatus())
-                .body(ErrorResponse.builder()
-                        .status(errorCode.getStatus().value())
-                        .name(errorCode.name())
-                        .message(errorCode.getMessage())
-                        .build()
-                );
-
+                .body(ApiResponse.error(errorCode));
     }
-
 }

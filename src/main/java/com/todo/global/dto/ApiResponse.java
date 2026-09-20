@@ -27,7 +27,7 @@ public class ApiResponse<T> {
     }
 
     // 예외 응답
-    public static <T> ApiResponse<T> error(String code, ErrorCode e) {
+    public static <T> ApiResponse<T> error(ErrorCode e) {
         return new ApiResponse<>(false, null, LocalDateTime.now() ,new ErrorDetail(e));
     }
 
