@@ -10,6 +10,8 @@ public enum ErrorCode {
 
     TODO_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "해당하는 ID의 Todo를 찾을 수 없습니다."),
 
+    INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "유효하지 않은 요청입니다"),
+
     // 500 INTERNAL_SERVER_ERROR 서버 내부 에러
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러가 발생했습니다.");
 
