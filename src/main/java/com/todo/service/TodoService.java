@@ -20,9 +20,13 @@ public class TodoService {
 
     private final TodoRepository todoRepository;
 
-    public TodoResponseDto createTodo(TodoCreateDto reqeust){
+    public TodoResponseDto createTodo(TodoCreateDto request){
 
-        Todo todo =  new Todo(reqeust.getTitle());
+        log.info("todo 생성 요청 내용: {}", request.getTitle());
+
+        Todo todo =  new Todo(request.getTitle());
+
+        log.info("todo 생성 내용: {}", todo.getTitle());
 
         todoRepository.save(todo);
 

@@ -1,8 +1,11 @@
 package com.todo.controller;
 
 import com.todo.dto.request.TodoCreateDto;
+import com.todo.dto.request.TodoUpdateDto;
 import com.todo.dto.response.TodoResponseDto;
+import com.todo.global.dto.ApiResponse;
 import com.todo.service.TodoService;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -19,33 +22,59 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<TodoResponseDto> createTodo(TodoCreateDto request){
+    public ResponseEntity<ApiResponse<TodoResponseDto>> createTodo(@RequestBody TodoCreateDto request){
 
         TodoResponseDto result = todoService.createTodo(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(result));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TodoResponseDto> findById(@PathVariable Integer id){
+    public ResponseEntity<ApiResponse<TodoResponseDto>> findById(@PathVariable int id){
 
         TodoResponseDto result = todoService.getTodoById(id);
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
-    @PostMapping
-    public ResponseEntity<Page<TodoResponseDto>> findTodoPage(@ParameterObject Pageable pageable){
+    @GetMapping
+    public ResponseEntity<ApiResponse<Page<TodoResponseDto>>> findTodoPage(@ParameterObject Pageable pageable){
 
         Page<TodoResponseDto> result = todoService.getTodoPage(pageable);
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(ApiResponse.success(result));
     }
 
-//    Todo: 수정 기능 구현
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<TodoResponseDto>> setTitle(@PathVariable int id, @RequestBody TodoUpdateDto request){
 
-//    Todo: 완료 기능 구현
+        TodoResponseDto result = todoService.setTitle(id, request.getTitle());
 
-//    Todo: 삭제 기능 구현
+        return ResponseEntity.ok(ApiResponse.success(result));
+    }
+
+    @PatchMapping("/{id}/complete")
+    public ResponseEntity<ApiResponse<TodoResponseDto>> completeTodo(@PathVariable int id){
+
+        TodoResponseDto result = todoService.setComplete(id);
+
+        return ResponseEntity.ok(ApiResponse.success(result));
+    }
+
+    @PatchMapping("/{id}/incomplete")
+    public ResponseEntity<ApiResponse<TodoResponseDto>> incompleteTodo(@PathVariable int id){
+
+        TodoResponseDto result = todoService.setIncomplete(id);
+
+        return ResponseEntity.ok(ApiResponse.success(result));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteTodo(@PathVariable int id){
+
+        todoService.deleteTodo(id);
+
+        return ResponseEntity.ok(ApiResponse.success());
+    }
 
 }
