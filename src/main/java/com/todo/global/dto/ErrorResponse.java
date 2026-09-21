@@ -18,4 +18,11 @@ public class ErrorResponse {
                 .status(errorCode.getStatus())
                 .body(ApiResponse.error(errorCode));
     }
+
+    public static ResponseEntity<ApiResponse<?>> toResponseEntity(ErrorCode errorCode, String customMessage){
+        return ResponseEntity
+                .status(errorCode.getStatus())
+                .body(ApiResponse.error(errorCode, customMessage));
+    }
+
 }

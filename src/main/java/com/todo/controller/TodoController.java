@@ -5,7 +5,7 @@ import com.todo.dto.request.TodoUpdateDto;
 import com.todo.dto.response.TodoResponseDto;
 import com.todo.global.dto.ApiResponse;
 import com.todo.service.TodoService;
-import jakarta.validation.constraints.Null;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ public class TodoController {
     private final TodoService todoService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<TodoResponseDto>> createTodo(@RequestBody TodoCreateDto request){
+    public ResponseEntity<ApiResponse<TodoResponseDto>> createTodo(@Valid @RequestBody TodoCreateDto request){
 
         TodoResponseDto result = todoService.createTodo(request);
 
@@ -30,7 +30,7 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<TodoResponseDto>> findById(@PathVariable int id){
+    public ResponseEntity<ApiResponse<TodoResponseDto>> findById(@Valid @PathVariable int id){
 
         TodoResponseDto result = todoService.getTodoById(id);
 
@@ -38,7 +38,7 @@ public class TodoController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<TodoResponseDto>>> findTodoPage(@ParameterObject Pageable pageable){
+    public ResponseEntity<ApiResponse<Page<TodoResponseDto>>> findTodoPage(@Valid @ParameterObject Pageable pageable){
 
         Page<TodoResponseDto> result = todoService.getTodoPage(pageable);
 
@@ -46,7 +46,7 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<TodoResponseDto>> setTitle(@PathVariable int id, @RequestBody TodoUpdateDto request){
+    public ResponseEntity<ApiResponse<TodoResponseDto>> setTitle(@Valid @PathVariable int id, @Valid @RequestBody TodoUpdateDto request){
 
         TodoResponseDto result = todoService.setTitle(id, request.getTitle());
 
@@ -54,7 +54,7 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}/complete")
-    public ResponseEntity<ApiResponse<TodoResponseDto>> completeTodo(@PathVariable int id){
+    public ResponseEntity<ApiResponse<TodoResponseDto>> completeTodo(@Valid @PathVariable int id){
 
         TodoResponseDto result = todoService.setComplete(id);
 
@@ -62,7 +62,7 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}/incomplete")
-    public ResponseEntity<ApiResponse<TodoResponseDto>> incompleteTodo(@PathVariable int id){
+    public ResponseEntity<ApiResponse<TodoResponseDto>> incompleteTodo(@Valid @PathVariable int id){
 
         TodoResponseDto result = todoService.setIncomplete(id);
 
@@ -70,7 +70,7 @@ public class TodoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteTodo(@PathVariable int id){
+    public ResponseEntity<ApiResponse<Void>> deleteTodo(@Valid @PathVariable int id){
 
         todoService.deleteTodo(id);
 

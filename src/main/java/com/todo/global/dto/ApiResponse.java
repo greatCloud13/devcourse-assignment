@@ -31,6 +31,11 @@ public class ApiResponse<T> {
         return new ApiResponse<>(false, null, LocalDateTime.now() ,new ErrorDetail(e));
     }
 
+    // 커스텀 예외 응답
+    public static <T> ApiResponse<T> error(ErrorCode e, String message){
+        return new ApiResponse<>(false, null, LocalDateTime.now(), new ErrorDetail(e, message));
+    }
+
     @Getter
     public static class ErrorDetail {
 
@@ -40,6 +45,11 @@ public class ApiResponse<T> {
         public ErrorDetail(ErrorCode e){
             this.code = e.getStatus().value();
             this.message = e.getMessage();
+        }
+
+        public ErrorDetail(ErrorCode e, String message){
+            this.code = e.getStatus().value();
+            this.message = message;
         }
 
     }
