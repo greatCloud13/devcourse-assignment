@@ -1,7 +1,10 @@
 package com.todo.entity;
 
+import com.todo.dto.response.UserDto;
 import com.todo.global.jpa.entity.BaseIdAndTime;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +21,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "USER")
+@Table(name = "USERS")
 public class User extends BaseIdAndTime {
 
     private String email;
@@ -27,11 +30,19 @@ public class User extends BaseIdAndTime {
 
     private String password;
 
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     public User(String email, String nickname, String password){
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+    }
+
+    public UserDto toDto(){
+        return new UserDto(
+                this.getEmail(),
+                this.getNickname(),
+                this.getCreateDate());
     }
 }

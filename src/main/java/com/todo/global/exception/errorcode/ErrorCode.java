@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorCode {
 
+    USING_EMAIL(HttpStatus.CONFLICT, "이미 사용중인 이메일 입니다."),
+
     TODO_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "해당하는 ID의 Todo를 찾을 수 없습니다."),
 
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "유효하지 않은 요청입니다"),
