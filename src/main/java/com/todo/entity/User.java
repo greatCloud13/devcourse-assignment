@@ -2,10 +2,7 @@ package com.todo.entity;
 
 import com.todo.dto.response.UserDto;
 import com.todo.global.jpa.entity.BaseIdAndTime;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 @Entity
 @Getter
@@ -37,6 +35,7 @@ public class User extends BaseIdAndTime {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+        this.role = Role.ROLE_USER;
     }
 
     public UserDto toDto(){
@@ -44,5 +43,9 @@ public class User extends BaseIdAndTime {
                 this.getEmail(),
                 this.getNickname(),
                 this.getCreateDate());
+    }
+
+    public static String normalizeEmail(String email) {
+        return email.trim().toLowerCase(Locale.ROOT);
     }
 }

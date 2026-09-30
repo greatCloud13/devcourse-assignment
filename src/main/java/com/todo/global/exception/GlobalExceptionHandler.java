@@ -7,6 +7,7 @@ import com.todo.global.exception.errorcode.ErrorCode;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,6 +47,14 @@ public class GlobalExceptionHandler {
         return ErrorResponse.toResponseEntity(ErrorCode.INVALID_INPUT_VALUE);
     }
 
+    /**
+     * 로그인 시 AuthenticationManager.authenticate()가 던지는 예외
+     */
+    @ExceptionHandler(AuthenticationException.class)
+    protected ResponseEntity<ApiResponse<?>> handleAuthenticationException(AuthenticationException e) {
+        log.error("handleAuthenticationException: {}", e.getMessage());
+        return ErrorResponse.toResponseEntity(ErrorCode.INVALID_CREDENTIALS);
+    }
 
     @ExceptionHandler(CustomException.class)
     protected ResponseEntity<ApiResponse<?>> handleCustomException(CustomException e){

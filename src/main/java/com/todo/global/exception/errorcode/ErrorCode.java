@@ -14,7 +14,12 @@ public enum ErrorCode {
 
     INVALID_INPUT_VALUE(HttpStatus.BAD_REQUEST, "유효하지 않은 요청입니다"),
 
-    // 500 INTERNAL_SERVER_ERROR 서버 내부 에러
+    UNAUTHENTICATED(HttpStatus.UNAUTHORIZED, "인증이 필요합니다."),
+
+    INVALID_CREDENTIALS(HttpStatus.UNAUTHORIZED, "이메일 또는 비밀번호가 일치하지 않습니다."),
+
+    ACCESS_DENIED(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
+
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러가 발생했습니다.");
 
     private final HttpStatus status;
